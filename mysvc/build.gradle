@@ -21,20 +21,28 @@ repositories {
 	mavenCentral()
 }
 
-ext {
-	set('springBootAdminVersion', "1.5.7")
-}
-
 dependencies {
 	compile 'org.springframework.boot:spring-boot-actuator-docs'
 	compile 'org.springframework.boot:spring-boot-starter-actuator'
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	compile 'de.codecentric:spring-boot-admin-starter-server'
+	compile("org.springframework.boot:spring-boot-starter-web:1.5.21.RELEASE") {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+	}
+	compile ('org.springframework.boot:spring-boot-starter-jetty') {
+		exclude group: 'org.eclipse.jetty.websocket'
+	}
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+test {
+	testLogging {
+		afterSuite { desc, result ->
+			if (!desc.parent) {
+				println "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+			}
+		}
+	}
+	reports {
+		junitXml.enabled = false
+		html.enabled = true
 	}
 }
