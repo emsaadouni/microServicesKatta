@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class MysvcApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(MysvcApplication.class, args);
 	}
-
 	@RestController
 	public static class HomeController {
-
 		@RequestMapping("/")
 		String home() {
 			return "Hello World!";

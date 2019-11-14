@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+
+
+
 import java.net.URL;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -23,7 +26,6 @@ import static org.junit.Assert.assertThat;
 public class HomeControllerIT {
     @Value("${local.server.port}")
     private int port;
-
     private URL base;
     private TestRestTemplate template;
 
@@ -38,5 +40,4 @@ public class HomeControllerIT {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
         assertThat(response.getBody(), equalTo("Hello World!"));
     }
-
 }

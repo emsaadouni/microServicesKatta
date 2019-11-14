@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-actuator-docs'
 	compile 'org.springframework.boot:spring-boot-starter-actuator'
 	compile("org.springframework.boot:spring-boot-starter-web:1.5.21.RELEASE") {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
@@ -44,5 +43,21 @@ test {
 	reports {
 		junitXml.enabled = false
 		html.enabled = true
+	}
+}
+task prepDocker(type: Copy, dependsOn: assemble) {
+	from 'docker'
+	into "$buildDir/docker"
+	include 'Dockerfile.template'
+	rename { file -> 'Dockerfile' }
+	expand(project: project, jar: jar )
+	doFirst {
+		copy {
+			from jar
+			into "$buildDir/docker"
+		}
+	}
+	doLast {
+		println "Docker command: docker build -t ${jar.group}/${jar.baseName}:${jar.version} build/docker"
 	}
 }
