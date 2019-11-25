@@ -6,3 +6,14 @@ endpoints:
     sensitive: false
   shutdown:
     enabled: true
+spring:
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:mysql://dockerhost:3306/demo
+    username: root
+    password: p@ssw0rd
+    driver-class-name: com.mysql.jdbc.Driver
