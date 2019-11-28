@@ -1,6 +1,5 @@
 server:
   port: 8100
-
 endpoints:
   health:
     sensitive: false
@@ -17,3 +16,8 @@ spring:
     username: root
     password: p@ssw0rd
     driver-class-name: com.mysql.jdbc.Driver
+
+  server:
+    port: ${PORT:8100}
+
+  name: World

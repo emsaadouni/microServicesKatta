@@ -1,8 +1,11 @@
 package msvcdojo.mysvc;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,5 +55,17 @@ public class AccountsServiceApplication {
     interface AccountRepository extends JpaRepository<Account, Long> {
         List<Account> findByUsername(@Param("username") String username);
         List<Account> findByRole(@Param("role") String role);
+    }
+
+    @RestController
+    class HomeController {
+
+        @Value("${name}")
+        private String name;
+
+        @RequestMapping("/")
+        String home() {
+            return "Hello, " + name + "!";
+        }
     }
 }
